@@ -1,0 +1,144 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: "S&P Global Market Intelligence"
+  description: >-
+    Unified capability combining S&P Capital IQ financial data and Commodity
+    Insights price assessments for comprehensive market intelligence workflows.
+    Used by financial analysts, portfolio managers, and commodity traders to
+    research company financials alongside market price data.
+  tags:
+    - Market Intelligence
+    - Financial Data
+    - Commodity Insights
+    - Analytics
+    - S&P Global
+  created: "2026-05-02"
+  modified: "2026-05-02"
+
+binds:
+  - namespace: env
+    keys:
+      CAPITAL_IQ_API_KEY: CAPITAL_IQ_API_KEY
+      PLATTS_API_TOKEN: PLATTS_API_TOKEN
+
+capability:
+  consumes:
+    - import: capital-iq
+      location: ./shared/capital-iq.yaml
+    - import: commodity-insights
+      location: ./shared/commodity-insights.yaml
+
+  exposes:
+    - type: rest
+      port: 8080
+      namespace: market-intelligence-api
+      description: "Unified REST API for S&P Global market intelligence and commodity data."
+      resources:
+        - path: /v1/companies/financials
+          name: company-financials
+          description: "Financial data for public and private companies"
+          operations:
+            - method: POST
+              name: get-company-financials
+              description: "Retrieve financial metrics for companies using Capital IQ mnemonics"
+              call: "capital-iq.get-financial-data"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+        - path: /v1/commodities/prices
+          name: commodity-prices
+          description: "Current commodity price assessments"
+          operations:
+            - method: GET
+              name: get-commodity-prices
+              description: "Retrieve latest commodity price assessments"
+              call: "commodity-insights.get-latest-prices"
+              with:
+                symbol: "rest.symbol"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+        - path: /v1/commodities/history
+          name: commodity-price-history
+          description: "Historical commodity price data"
+          operations:
+            - method: GET
+              name: get-commodity-price-history
+              description: "Retrieve historical commodity price assessments"
+              call: "commodity-insights.get-price-history"
+              with:
+                symbol: "rest.symbol"
+                startDate: "rest.startDate"
+                endDate: "rest.endDate"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+        - path: /v1/commodities/symbols
+          name: commodity-symbols
+          description: "Commodity symbol reference data"
+          operations:
+            - method: GET
+              name: get-commodity-symbols
+              description: "Get reference data for commodity symbols"
+              call: "commodity-insights.get-symbol-reference-data"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    - type: mcp
+      port: 9090
+      namespace: market-intelligence-mcp
+      transport: http
+      description: "MCP server for AI-assisted S&P Global market intelligence research."
+      tools:
+        - name: get-company-financials
+          description: "Retrieve financial metrics for public or private companies from S&P Capital IQ"
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "capital-iq.get-financial-data"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: get-commodity-prices
+          description: "Get the latest commodity price assessments from S&P Global Platts"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "commodity-insights.get-latest-prices"
+          with:
+            symbol: "tools.symbol"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: get-commodity-price-history
+          description: "Retrieve historical commodity price data for trend analysis"
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "commodity-insights.get-price-history"
+          with:
+            symbol: "tools.symbol"
+            startDate: "tools.startDate"
+            endDate: "tools.endDate"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: lookup-commodity-symbol
+          description: "Look up commodity symbol metadata including description, unit, and currency"
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "commodity-insights.get-symbol-reference-data"
+          with:
+            symbol: "tools.symbol"
+          outputParameters:
+            - type: object
+              mapping: "$."

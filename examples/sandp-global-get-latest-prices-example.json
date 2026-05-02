@@ -1,0 +1,34 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "https://api.platts.com/v1/prices/latest?symbol=PCAAS00,AAQZB00",
+    "headers": {
+      "Authorization": "Bearer {access_token}",
+      "Accept": "application/json"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "results": [
+        {
+          "symbol": "PCAAS00",
+          "assessDate": "2026-05-01",
+          "value": 82.50,
+          "unit": "BBL",
+          "currency": "USD",
+          "modDate": "2026-05-01T16:30:00Z"
+        },
+        {
+          "symbol": "AAQZB00",
+          "assessDate": "2026-05-01",
+          "value": 9.35,
+          "unit": "MMBTU",
+          "currency": "USD",
+          "modDate": "2026-05-01T16:30:00Z"
+        }
+      ],
+      "count": 2
+    }
+  }
+}

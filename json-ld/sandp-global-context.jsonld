@@ -1,0 +1,75 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "schema": "https://schema.org/",
+    "spglobal": "https://api-evangelist.github.io/sandp-global/vocab#",
+    "fibo": "https://spec.edmcouncil.org/fibo/ontology/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+
+    "PriceAssessment": {
+      "@id": "spglobal:PriceAssessment",
+      "@type": "schema:Intangible",
+      "schema:description": "A benchmark commodity price assessed by S&P Global Commodity Insights editors"
+    },
+
+    "FinancialDataRequest": {
+      "@id": "spglobal:FinancialDataRequest",
+      "@type": "schema:SearchAction",
+      "schema:description": "A request to the Capital IQ API for financial or market data"
+    },
+
+    "symbol": {
+      "@id": "spglobal:plattsSymbol",
+      "@type": "xsd:string"
+    },
+
+    "assessDate": {
+      "@id": "schema:datePublished",
+      "@type": "xsd:date"
+    },
+
+    "value": {
+      "@id": "schema:price",
+      "@type": "xsd:decimal"
+    },
+
+    "unit": {
+      "@id": "schema:unitText",
+      "@type": "xsd:string"
+    },
+
+    "currency": {
+      "@id": "schema:priceCurrency",
+      "@type": "xsd:string"
+    },
+
+    "mnemonic": {
+      "@id": "spglobal:dataMnemonic",
+      "@type": "xsd:string"
+    },
+
+    "identifier": {
+      "@id": "schema:identifier",
+      "@type": "xsd:string"
+    },
+
+    "Commodity": {
+      "@id": "spglobal:Commodity",
+      "@type": "schema:Product"
+    },
+
+    "CreditRating": {
+      "@id": "spglobal:CreditRating",
+      "@type": "schema:Rating"
+    },
+
+    "Company": {
+      "@id": "schema:Organization"
+    },
+
+    "periodType": {
+      "@id": "spglobal:periodType",
+      "@type": "xsd:string"
+    }
+  }
+}

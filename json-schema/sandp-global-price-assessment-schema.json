@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://api-evangelist.github.io/sandp-global/json-schema/price-assessment.json",
+  "title": "S&P Global Price Assessment",
+  "description": "Schema for a S&P Global Commodity Insights price assessment record, representing a benchmark commodity price as assessed by Platts editors.",
+  "type": "object",
+  "required": ["symbol", "assessDate", "value", "unit", "currency"],
+  "properties": {
+    "symbol": {
+      "type": "string",
+      "description": "Platts symbol code uniquely identifying the commodity assessment",
+      "examples": ["PCAAS00", "AAQZB00"]
+    },
+    "assessDate": {
+      "type": "string",
+      "format": "date",
+      "description": "The date of the price assessment in ISO 8601 format"
+    },
+    "value": {
+      "type": "number",
+      "format": "double",
+      "description": "The assessed price value"
+    },
+    "unit": {
+      "type": "string",
+      "description": "Unit of measure for the price",
+      "examples": ["BBL", "MT", "MMBTU", "GAL", "TON"]
+    },
+    "currency": {
+      "type": "string",
+      "pattern": "^[A-Z]{3}$",
+      "description": "ISO 4217 currency code",
+      "examples": ["USD", "EUR", "GBP"]
+    },
+    "modDate": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp of last modification"
+    },
+    "bate": {
+      "type": "string",
+      "description": "Buy/Ask/Trade/Estimate indicator"
+    }
+  },
+  "additionalProperties": false
+}

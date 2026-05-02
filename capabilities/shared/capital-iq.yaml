@@ -1,0 +1,86 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: "S&P Capital IQ API"
+  description: >-
+    Provides access to comprehensive global financial data including fundamentals,
+    valuations, credit ratings, capital structure, and market intelligence for
+    public and private companies.
+  tags:
+    - Financial Data
+    - Market Intelligence
+    - Credit Ratings
+    - Capital IQ
+  created: "2026-05-02"
+  modified: "2026-05-02"
+
+binds:
+  - namespace: env
+    keys:
+      CAPITAL_IQ_API_KEY: CAPITAL_IQ_API_KEY
+
+capability:
+  consumes:
+    - type: http
+      namespace: capital-iq
+      baseUri: https://api-ciq.marketintelligence.spglobal.com/gdsapi/rest
+      description: "S&P Capital IQ financial data API with comprehensive global company data"
+      authentication:
+        type: bearer
+        token: "{{CAPITAL_IQ_API_KEY}}"
+      resources:
+        - name: authentication
+          path: /authenticate/api/v1
+          description: "Token generation and refresh"
+          operations:
+            - name: generate-auth-token
+              method: POST
+              description: "Generate Bearer access token using SSO credentials"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+        - name: financial-data
+          path: /v3
+          description: "Financial and market intelligence data retrieval"
+          operations:
+            - name: get-financial-data
+              method: POST
+              description: "Retrieve financial data for company using function, identifier, and mnemonic"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+  exposes:
+    - type: rest
+      port: 8100
+      namespace: capital-iq-api
+      resources:
+        - path: /v1/financial-data
+          operations:
+            - method: POST
+              name: get-financial-data
+              description: "Retrieve financial metrics for companies"
+              call: "capital-iq.get-financial-data"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    - type: mcp
+      port: 9100
+      namespace: capital-iq-mcp
+      transport: http
+      tools:
+        - name: get-financial-data
+          description: "Retrieve financial and market intelligence data from S&P Capital IQ"
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "capital-iq.get-financial-data"
+          outputParameters:
+            - type: object
+              mapping: "$."

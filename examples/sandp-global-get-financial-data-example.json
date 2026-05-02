@@ -1,0 +1,46 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "https://api-ciq.marketintelligence.spglobal.com/gdsapi/rest/v3/clientservice.json",
+    "headers": {
+      "Authorization": "Bearer {access_token}",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "inputRequests": [
+        {
+          "function": "GDSP",
+          "identifier": "IQ303931",
+          "mnemonic": "IQ_TOTAL_REV",
+          "properties": {
+            "startDate": "2024-01-01",
+            "endDate": "2024-12-31",
+            "periodType": "Annual"
+          }
+        }
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "GDSSDKResponse": [
+        {
+          "Rows": [
+            {
+              "Row": ["12345678000"]
+            }
+          ],
+          "Headers": [
+            {
+              "Name": "IQ_TOTAL_REV"
+            }
+          ],
+          "ErrMsg": null,
+          "Type": "Double",
+          "RequestId": "GDSP||IQ303931||IQ_TOTAL_REV"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,76 @@
+rules:
+  sandp-global-bearer-auth-required:
+    description: All S&P Global API endpoints must use Bearer token authentication
+    message: "Endpoint {{path}} must use BearerAuth security scheme"
+    severity: error
+    given: "$.paths[*][*]"
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          properties:
+            security:
+              type: array
+          required:
+            - security
+
+  sandp-global-https-only:
+    description: All S&P Global API servers must use HTTPS
+    message: "Server URL must use HTTPS for S&P Global APIs"
+    severity: error
+    given: "$.servers[*]"
+    then:
+      field: url
+      function: pattern
+      functionOptions:
+        match: "^https://"
+
+  sandp-global-response-200-defined:
+    description: All S&P Global operations should define a 200 response
+    message: "Operation {{path}} should define a 200 response"
+    severity: warn
+    given: "$.paths[*][*].responses"
+    then:
+      field: "200"
+      function: truthy
+
+  sandp-global-operation-ids-required:
+    description: All operations must have operationId for SDK generation
+    message: "Operation at {{path}} must have an operationId"
+    severity: error
+    given: "$.paths[*][*]"
+    then:
+      field: operationId
+      function: truthy
+
+  sandp-global-tags-required:
+    description: All operations must have tags for grouping in developer portal
+    message: "Operation {{operationId}} must have at least one tag"
+    severity: warn
+    given: "$.paths[*][*]"
+    then:
+      field: tags
+      function: truthy
+
+  sandp-global-description-required:
+    description: All operations and parameters must have descriptions
+    message: "{{path}} must have a description"
+    severity: warn
+    given: "$.paths[*][*]"
+    then:
+      field: description
+      function: truthy
+
+  sandp-global-json-content-type:
+    description: S&P Global APIs use application/json content type
+    message: "Request/response body at {{path}} should use application/json"
+    severity: warn
+    given: "$.paths[*][*].requestBody.content"
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          required:
+            - application/json

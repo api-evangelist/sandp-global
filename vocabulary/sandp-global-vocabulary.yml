@@ -1,0 +1,126 @@
+vocabulary:
+  provider: S&P Global
+  description: >-
+    Domain vocabulary for S&P Global APIs covering financial market intelligence,
+    commodity price assessments, credit ratings, and market data concepts.
+  created: '2026-05-02'
+  modified: '2026-05-02'
+  terms:
+    - term: Capital IQ
+      definition: >-
+        S&P Global's premier financial data and analytics platform providing
+        comprehensive data on public and private companies, capital markets,
+        and financial transactions.
+      tags:
+        - Platform
+        - Financial Data
+        - Market Intelligence
+
+    - term: Platts
+      definition: >-
+        S&P Global's commodity price reporting and analytics business, now
+        called Commodity Insights. Platts provides benchmark price assessments
+        for oil, gas, metals, and agricultural commodities.
+      tags:
+        - Commodity
+        - Price Assessment
+        - Energy
+
+    - term: Mnemonic
+      definition: >-
+        A short code used in the Capital IQ API to identify a specific
+        financial data point (e.g., IQ_TOTAL_REV for total revenue,
+        IQ_NET_INC for net income).
+      tags:
+        - API
+        - Data Identifier
+        - Financial
+
+    - term: GVKEY
+      definition: >-
+        S&P Global's unique company identifier used in the Capital IQ
+        database. A numeric code assigned to each company tracked in the
+        Capital IQ platform.
+      tags:
+        - Identifier
+        - Company
+        - Reference Data
+
+    - term: Price Assessment
+      definition: >-
+        A benchmark commodity price determined by S&P Global Commodity
+        Insights editors using a transparent, methodology-based process.
+        Published daily for hundreds of commodity markets.
+      tags:
+        - Commodity
+        - Pricing
+        - Benchmark
+
+    - term: Platts Symbol
+      definition: >-
+        A unique alphanumeric code (e.g., PCAAS00) used to identify a
+        specific S&P Global Commodity Insights price assessment, including
+        the commodity, location, and assessment methodology.
+      tags:
+        - Identifier
+        - Commodity
+        - Symbol
+
+    - term: GDSP
+      definition: >-
+        Get Data Single Point — a Capital IQ API function code for
+        retrieving a single financial data value for a given company
+        and mnemonic.
+      tags:
+        - API
+        - Function Code
+        - Financial Data
+
+    - term: GDST
+      definition: >-
+        Get Data Series Time — a Capital IQ API function code for
+        retrieving a time series of financial data values.
+      tags:
+        - API
+        - Function Code
+        - Time Series
+
+    - term: Credit Rating
+      definition: >-
+        An assessment of a borrower's creditworthiness issued by S&P Global
+        Ratings. Ratings range from AAA (highest) to D (default) with
+        intermediate grades.
+      tags:
+        - Credit
+        - Risk
+        - Fixed Income
+
+    - term: Bearer Token
+      definition: >-
+        An OAuth 2.0 access token used to authenticate requests to S&P
+        Global APIs. Generated via the authentication endpoint with SSO
+        credentials and valid for 3600 seconds.
+      tags:
+        - Authentication
+        - Security
+        - OAuth
+
+    - term: BATE
+      definition: >-
+        Buy/Ask/Trade/Estimate — a code used in Commodity Insights data
+        to indicate the type of price assessment: B=Buy offer, A=Ask offer,
+        T=Actual trade, E=Editorial estimate.
+      tags:
+        - Commodity
+        - Pricing
+        - Methodology
+
+    - term: Market Data Content Set
+      definition: >-
+        A subscription-based bundle of commodity market data accessible
+        through the Commodity Insights API. Users can only access symbols
+        included in their licensed content sets.
+      tags:
+        - Subscription
+        - Access Control
+        - Commodity

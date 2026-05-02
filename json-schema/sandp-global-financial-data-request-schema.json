@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://api-evangelist.github.io/sandp-global/json-schema/financial-data-request.json",
+  "title": "S&P Capital IQ Financial Data Request",
+  "description": "Schema for requesting financial and market intelligence data from the S&P Capital IQ API.",
+  "type": "object",
+  "required": ["inputRequests"],
+  "properties": {
+    "inputRequests": {
+      "type": "array",
+      "description": "Array of data retrieval requests",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["function", "identifier", "mnemonic"],
+        "properties": {
+          "function": {
+            "type": "string",
+            "description": "Data retrieval function code",
+            "enum": ["GDSP", "GDST", "GDSHE", "GDSHV", "GDSO", "GDSFIN"],
+            "examples": ["GDSP"]
+          },
+          "identifier": {
+            "type": "string",
+            "description": "Company or security identifier (GVKEY, ticker, CUSIP, ISIN)",
+            "examples": ["IQ303931", "AAPL", "037833100"]
+          },
+          "mnemonic": {
+            "type": "string",
+            "description": "Data point mnemonic code for the specific financial metric",
+            "examples": ["IQ_TOTAL_REV", "IQ_NET_INC", "IQ_TOTAL_ASSETS"]
+          },
+          "properties": {
+            "type": "object",
+            "description": "Optional request properties for filtering and date ranges",
+            "properties": {
+              "startDate": {
+                "type": "string",
+                "format": "date",
+                "description": "Start date for time series (YYYY-MM-DD)"
+              },
+              "endDate": {
+                "type": "string",
+                "format": "date",
+                "description": "End date for time series (YYYY-MM-DD)"
+              },
+              "periodType": {
+                "type": "string",
+                "enum": ["Annual", "Quarterly", "LTM", "YTD", "Semi-Annual"],
+                "description": "Financial period type"
+              },
+              "currency": {
+                "type": "string",
+                "pattern": "^[A-Z]{3}$",
+                "description": "Currency for financial data conversion"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

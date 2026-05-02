@@ -1,0 +1,56 @@
+{
+  "title": "S&P Global Price Assessment Structure",
+  "description": "Structure documentation for S&P Global Commodity Insights price assessment data",
+  "type": "object",
+  "fields": [
+    {
+      "name": "symbol",
+      "type": "string",
+      "description": "Platts symbol code identifying the commodity and assessment methodology",
+      "required": true,
+      "example": "PCAAS00"
+    },
+    {
+      "name": "assessDate",
+      "type": "date",
+      "description": "Date the price was assessed (ISO 8601)",
+      "required": true,
+      "example": "2026-05-01"
+    },
+    {
+      "name": "value",
+      "type": "number",
+      "description": "Assessed price value in the specified currency and unit",
+      "required": true,
+      "example": 82.50
+    },
+    {
+      "name": "unit",
+      "type": "string",
+      "description": "Unit of measure (BBL=barrel, MT=metric ton, MMBTU=million BTU)",
+      "required": true,
+      "example": "BBL"
+    },
+    {
+      "name": "currency",
+      "type": "string",
+      "description": "ISO 4217 three-letter currency code",
+      "required": true,
+      "example": "USD"
+    },
+    {
+      "name": "modDate",
+      "type": "datetime",
+      "description": "UTC timestamp of last modification",
+      "required": false,
+      "example": "2026-05-01T16:30:00Z"
+    },
+    {
+      "name": "bate",
+      "type": "string",
+      "description": "Price type: B=Buy, A=Ask, T=Trade, E=Estimate",
+      "required": false,
+      "example": "A"
+    }
+  ]
+}
