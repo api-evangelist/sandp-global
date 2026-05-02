@@ -21,6 +21,7 @@ tags:
   - Enterprise
 created: '2026-05-02'
 modified: '2026-05-02'
+x-profiled: '2026-05'
 url: >-
   https://raw.githubusercontent.com/api-evangelist/sandp-global/refs/heads/main/apis.yml
 specificationVersion: '0.19'
@@ -50,6 +51,8 @@ apis:
       - type: OpenAPI
         url: >-
           https://raw.githubusercontent.com/api-evangelist/sandp-global/refs/heads/main/openapi/sandp-global-capital-iq-openapi.yml
+      - type: JSONSchema
+        url: json-schema/sandp-global-financial-data-request-schema.json
 
   - aid: sandp-global:sandp-global-commodity-insights-api
     name: S&P Global Commodity Insights API
@@ -80,6 +83,8 @@ apis:
       - type: OpenAPI
         url: >-
           https://raw.githubusercontent.com/api-evangelist/sandp-global/refs/heads/main/openapi/sandp-global-commodity-insights-openapi.yml
+      - type: JSONSchema
+        url: json-schema/sandp-global-price-assessment-schema.json
 
   - aid: sandp-global:sandp-global-marketplace-catalog-api
     name: S&P Global Marketplace Catalog API
@@ -117,6 +122,14 @@ common:
     url: https://developer.spglobal.com/support/faq
   - type: Support
     url: https://commodityinsightssupport.spglobal.com
+  - type: Vocabulary
+    url: vocabulary/sandp-global-vocabulary.yml
+  - type: SpectralRules
+    url: rules/sandp-global-rules.yml
+  - type: Capabilities
+    url: capabilities/market-intelligence.yaml
+  - type: JSONLD
+    url: json-ld/sandp-global-context.jsonld
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
