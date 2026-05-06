@@ -1,156 +1,87 @@
 specification: FinOps Framework
 specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
+provider: S&P Global
+providerId: sandp-global
+created: '2026-05-04'
+modified: '2026-05-05'
+reconciled: false
+tags:
+- Capital Markets
+- Financial Data
+- Indices
+- Market Intelligence
+- Ratings
+- FinOps
+- FOCUS
+description: FOCUS-aligned FinOps artifact for S&P Global. Pricing is gated; meters and principles describe
+  the expected billing surface. S&P Global APIs and data feeds (Market Intelligence, Capital IQ, Indices,
+  Ratings, Platts) are sold under enterprise data licenses. There is no public price list; access is via
+  contract with S&P Global sales.
+sources:
+- https://www.spglobal.com/marketintelligence/en/solutions/marketplace
+- https://focus.finops.org/focus-specification/v1-3/
+- https://www.finops.org/framework/
 alignedWith:
   framework: FinOps Foundation Framework
   frameworkUrl: https://www.finops.org/framework/
   dataSpec: FOCUS
   dataSpecVersion: '1.3'
   dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
-provider: S&P Global
-providerId: sandp-global
-publisherName: S&P Global
-serviceCategory: API
-created: '2026-05-04'
-modified: '2026-05-04'
-tags:
-  - Financial Data
-  - Market Intelligence
-  - Commodity Insights
-  - Credit Ratings
-  - Analytics
-  - Fortune 500
-  - Enterprise
-  - FinOps
-  - Cost Management
-  - FOCUS
-description: FinOps framework definition for the S&P Global API surface. Provides a FOCUS-aligned mapping
-  for cost allocation, usage measurement, and unit-economics reporting across the provider's APIs.
-principles:
-  - name: Visibility
-    description: Make API consumption costs visible to engineering, product, and finance teams in near
-      real-time.
-  - name: Allocation
-    description: Tag every chargeable API call with the consuming team, environment, application, and
-      feature so cost can be allocated.
-  - name: Optimization
-    description: Continuously evaluate request patterns, caching, batching, and tier selection to reduce
-      cost per useful unit of work.
-  - name: Accountability
-    description: Establish budget owners and chargeback or showback flows for each consuming team.
-domains:
-  - name: Understand Usage and Cost
-    capabilities:
-      - Data Ingestion
-      - Allocation
-      - Reporting and Analytics
-      - Anomaly Management
-  - name: Quantify Business Value
-    capabilities:
-      - Planning and Estimating
-      - Forecasting
-      - Budgeting
-      - Benchmarking
-      - Unit Economics
-  - name: Optimize Usage and Cost
-    capabilities:
-      - Architecting for Cloud
-      - Rate Optimization
-      - Workload Optimization
-      - Cloud Sustainability
-      - Licensing and SaaS
-  - name: Manage the FinOps Practice
-    capabilities:
-      - FinOps Practice Operations
-      - FinOps Education and Enablement
-      - Invoicing and Chargeback
-      - Onboarding Workloads
-      - Intersecting Disciplines
+publisherName: S&P Global Inc.
+serviceCategory: Financial Market Data
 billingModel:
-  pricingCategory: Usage-Based
-  billingFrequency: Monthly
+  pricingCategory: Subscription / Licensed
+  billingFrequency: Annual
   billingCurrency: USD
   chargeCategories:
-    - Usage
-    - Purchase
-    - Tax
-    - Credit
-    - Adjustment
-  chargeFrequency: Recurring
+  - Purchase
+  - Tax
+  - Adjustment
 focusColumns:
   ServiceName: S&P Global
-  ServiceCategory: Developer Tools / API
+  ServiceCategory: Financial Market Data
+  ServiceSubcategory: Market Data / Indices
   ProviderName: S&P Global
-  PublisherName: S&P Global
-  InvoiceIssuerName: S&P Global
-  PricingCategory: Usage-Based
-  PricingUnit: request
+  PublisherName: S&P Global Inc.
+  InvoiceIssuerName: S&P Global Inc.
   BillingCurrency: USD
-  ChargeCategory: Usage
+  ChargeCategory: Purchase
 meters:
-  - name: api_requests
-    description: Count of billable API requests
-    unit: request
-    aggregation: sum
-    dimensions:
-      - api
-      - endpoint
-      - tier
-      - region
-      - consumer
-  - name: data_egress
-    description: Bytes returned over the network in API responses
-    unit: GB
-    aggregation: sum
-    dimensions:
-      - api
-      - region
-      - consumer
-  - name: compute_seconds
-    description: Server-side compute consumed by the request, where applicable
-    unit: second
-    aggregation: sum
-    dimensions:
-      - api
-      - endpoint
-      - tier
-apis:
-  - name: S&P Capital IQ API
-    baseURL: ''
-    tags:
-      - Financial Data
-      - Fundamentals
-      - Credit Ratings
-      - Market Intelligence
-      - REST
-    serviceName: S&P Capital IQ API
-    serviceCategory: API
-  - name: S&P Global Commodity Insights API
-    baseURL: ''
-    tags:
-      - Commodity Data
-      - Energy
-      - Metals
-      - Platts
-      - Price Assessments
-      - REST
-    serviceName: S&P Global Commodity Insights API
-    serviceCategory: API
-  - name: S&P Global Marketplace Catalog API
-    baseURL: ''
-    tags:
-      - Data Catalog
-      - Marketplace
-      - Discovery
-      - REST
-    serviceName: S&P Global Marketplace Catalog API
-    serviceCategory: API
-unitEconomics:
-  - name: Cost per 1K Requests
-    metric: billed_cost / (api_requests / 1000)
-    target: TBD
-  - name: Cost per Active Consumer
-    metric: billed_cost / active_consumers
-    target: TBD
-maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+- name: data_license
+  unit: month
+  aggregation: max
+  dimensions:
+  - product
+  - user_count
+- name: api_requests
+  unit: request
+  aggregation: sum
+  dimensions:
+  - product
+  - feed
+  - client_id
+- name: data_volume
+  unit: GB
+  aggregation: sum
+  dimensions:
+  - product
+  - feed
+principles:
+- name: Visibility
+  description: Track consumption per data feed (Capital IQ, Xpressfeed, Marketplace, Indices) using S&P
+    Global's customer portal; reconcile against the negotiated user / record / redistribution caps in
+    your contract.
+- name: Allocation
+  description: Tag every downstream consumer (desk, application, fund) so usage caps and redistribution
+    clauses can be attributed; required for audit response.
+- name: Optimization
+  description: Right-size feed scope at renewal — drop unused universes / regions; use delta files (Xpressfeed)
+    instead of full snapshots to cut data-volume charges; consolidate users under enterprise licenses
+    where it lowers per-seat cost.
+- name: Accountability
+  description: Market-data manager owns S&P Global vendor relationship, audit responses, and license-cap
+    monitoring.
+notes: S&P Global APIs and data feeds (Market Intelligence, Capital IQ, Indices, Ratings, Platts) are
+  sold under enterprise data licenses. There is no public price list; access is via contract with S&P
+  Global sales.
