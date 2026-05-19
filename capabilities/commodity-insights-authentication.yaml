@@ -1,0 +1,80 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: S&P Global Commodity Insights API — Authentication
+  description: 'S&P Global Commodity Insights API — Authentication. 1 operations. Lead operation: Generate Bearer Token. Self-contained
+    Naftiko capability covering one Sandp Global business surface.'
+  tags:
+  - Sandp Global
+  - Authentication
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    SANDP_GLOBAL_API_KEY: SANDP_GLOBAL_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: commodity-insights-authentication
+    baseUri: https://api.platts.com
+    description: S&P Global Commodity Insights API — Authentication business capability. Self-contained, no shared references.
+    resources:
+    - name: auth-api
+      path: /auth/api
+      operations:
+      - name: generatecommoditytoken
+        method: POST
+        description: Generate Bearer Token
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.SANDP_GLOBAL_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: commodity-insights-authentication-rest
+    port: 8080
+    description: REST adapter for S&P Global Commodity Insights API — Authentication. One Spectral-compliant resource per
+      consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/auth/api
+      name: auth-api
+      description: REST surface for auth-api.
+      operations:
+      - method: POST
+        name: generatecommoditytoken
+        description: Generate Bearer Token
+        call: commodity-insights-authentication.generatecommoditytoken
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: commodity-insights-authentication-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for S&P Global Commodity Insights API — Authentication. One tool per consumed operation, routed
+      inline through this capability's consumes block.
+    tools:
+    - name: generate-bearer-token
+      description: Generate Bearer Token
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: commodity-insights-authentication.generatecommoditytoken
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

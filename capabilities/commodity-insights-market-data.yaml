@@ -1,0 +1,70 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: S&P Global Commodity Insights API — Market Data
+  description: 'S&P Global Commodity Insights API — Market Data. 1 operations. Lead operation: Get Market Data Content Sets
+    Price Groups. Self-contained Naftiko capability covering one Sandp Global business surface.'
+  tags:
+  - Sandp Global
+  - Market Data
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    SANDP_GLOBAL_API_KEY: SANDP_GLOBAL_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: commodity-insights-market-data
+    baseUri: https://api.platts.com
+    description: S&P Global Commodity Insights API — Market Data business capability. Self-contained, no shared references.
+    resources:
+    - name: v1-mdcs-priceGroup
+      path: /v1/mdcs/priceGroup
+      operations:
+      - name: getpricegroups
+        method: GET
+        description: Get Market Data Content Sets Price Groups
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.SANDP_GLOBAL_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: commodity-insights-market-data-rest
+    port: 8080
+    description: REST adapter for S&P Global Commodity Insights API — Market Data. One Spectral-compliant resource per consumed
+      operation, prefixed with /v1.
+    resources:
+    - path: /v1/v1/mdcs/pricegroup
+      name: v1-mdcs-pricegroup
+      description: REST surface for v1-mdcs-priceGroup.
+      operations:
+      - method: GET
+        name: getpricegroups
+        description: Get Market Data Content Sets Price Groups
+        call: commodity-insights-market-data.getpricegroups
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: commodity-insights-market-data-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for S&P Global Commodity Insights API — Market Data. One tool per consumed operation, routed
+      inline through this capability's consumes block.
+    tools:
+    - name: get-market-data-content-sets
+      description: Get Market Data Content Sets Price Groups
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: commodity-insights-market-data.getpricegroups
+      outputParameters:
+      - type: object
+        mapping: $.
