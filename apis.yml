@@ -124,6 +124,8 @@ common:
     url: capabilities/market-intelligence.yaml
   - type: JSONLD
     url: json-ld/sandp-global-context.jsonld
+  - type: LLMsTxt
+    url: https://developer.spglobal.com/llms.txt
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
