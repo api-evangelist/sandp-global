@@ -1,0 +1,77 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "S&P Capital IQ API",
+    "version": "v3"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Authentication",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Generate Authentication Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api-ciq.marketintelligence.spglobal.com/gdsapi/rest/authenticate/api/v1/token",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Generates a Bearer access token using S&P Global Single Sign-On credentials. The token is valid for 3600 seconds (60 minutes)."
+        },
+        {
+          "info": {
+            "name": "Refresh Authentication Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api-ciq.marketintelligence.spglobal.com/gdsapi/rest/authenticate/api/v1/tokenRefresh",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Refreshes an existing Bearer access token before it expires. Must be called before the 3600 second expiration window."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Financial Data",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Financial Data",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api-ciq.marketintelligence.spglobal.com/gdsapi/rest/v3/clientservice.json",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Primary endpoint for retrieving financial and market intelligence data. Submit a JSON request body specifying the data set, entity identifiers, mnemonic fields, and time parameters to retrieve financial data."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

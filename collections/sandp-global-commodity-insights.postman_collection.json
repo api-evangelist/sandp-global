@@ -1,0 +1,656 @@
+{
+  "item": [
+    {
+      "id": "8914c16c-263a-42f9-8fad-09ca70407356",
+      "name": "Authentication",
+      "description": {
+        "content": "Token generation for API access",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "07ba3421-9de5-43cf-acfb-8e64de0f56e6",
+          "name": "Generate Bearer Token",
+          "request": {
+            "name": "Generate Bearer Token",
+            "description": {
+              "content": "Generates a Bearer access token using S&P Global Single Sign-On credentials. The returned token is required for all subsequent API requests.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "auth",
+                "api"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"<string>\",\n  \"password\": \"<password>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "8278ef1c-b8b7-41ca-b406-3b399a2dd978",
+              "name": "Bearer token generated successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "auth",
+                    "api"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"<string>\",\n  \"password\": \"<password>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"token\": \"string\",\n  \"tokenType\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4148d990-68ec-45a3-9b00-c33ef17eed0b",
+              "name": "Invalid credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "auth",
+                    "api"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"<string>\",\n  \"password\": \"<password>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "18f8c33f-926d-4028-9f34-5697d8172db7",
+      "name": "Price Assessments",
+      "description": {
+        "content": "Commodity price assessment data",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "7ec11781-84b2-4101-8510-77817cb57546",
+          "name": "Get Latest Price Assessments",
+          "request": {
+            "name": "Get Latest Price Assessments",
+            "description": {
+              "content": "Retrieves the most recent price assessments for specified commodity symbols. Returns current benchmark prices and assessments.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "prices",
+                "latest"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "symbol",
+                  "value": "<string>",
+                  "description": "(Required) Comma-separated list of Platts symbol codes (e.g., PCAAS00,AAQZB00)"
+                },
+                {
+                  "disabled": false,
+                  "key": "access",
+                  "value": "<string>",
+                  "description": "Access type filter"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4381c0e0-6b6a-4b41-a123-6cb9402c1ee3",
+              "name": "Latest price assessments",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "prices",
+                    "latest"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "symbol",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "access",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"results\": [\n    {\n      \"symbol\": \"string\",\n      \"assessDate\": \"2011-07-30\",\n      \"value\": 5069.968760846842,\n      \"unit\": \"string\",\n      \"currency\": \"string\",\n      \"modDate\": \"1983-04-15T05:47:28.371Z\"\n    },\n    {\n      \"symbol\": \"string\",\n      \"assessDate\": \"1985-06-29\",\n      \"value\": 1380.1217388106247,\n      \"unit\": \"string\",\n      \"currency\": \"string\",\n      \"modDate\": \"1988-11-07T08:34:50.681Z\"\n    }\n  ],\n  \"count\": 5630\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4aa33e81-d618-4ac5-b22c-ec6d758d62cc",
+          "name": "Get Historical Price Assessments",
+          "request": {
+            "name": "Get Historical Price Assessments",
+            "description": {
+              "content": "Retrieves historical price assessments for specified commodity symbols within a date range.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "prices",
+                "history"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "symbol",
+                  "value": "<string>",
+                  "description": "(Required) Comma-separated list of Platts symbol codes"
+                },
+                {
+                  "disabled": false,
+                  "key": "startDate",
+                  "value": "<date>",
+                  "description": "(Required) Start date (YYYY-MM-DD)"
+                },
+                {
+                  "disabled": false,
+                  "key": "endDate",
+                  "value": "<date>",
+                  "description": "(Required) End date (YYYY-MM-DD)"
+                },
+                {
+                  "disabled": false,
+                  "key": "pageSize",
+                  "value": "1000",
+                  "description": "Number of records per page"
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number for pagination"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "413aaadc-fb96-48e5-89d5-7a6f5b3f946f",
+              "name": "Historical price data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "prices",
+                    "history"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "symbol",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "1000"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"results\": [\n    {\n      \"symbol\": \"string\",\n      \"assessDate\": \"2000-10-20\",\n      \"value\": 86.29401564052563,\n      \"unit\": \"string\",\n      \"currency\": \"string\",\n      \"modDate\": \"1993-10-02T15:22:35.947Z\"\n    },\n    {\n      \"symbol\": \"string\",\n      \"assessDate\": \"1988-05-08\",\n      \"value\": 9133.25955458307,\n      \"unit\": \"string\",\n      \"currency\": \"string\",\n      \"modDate\": \"2018-03-18T18:33:06.048Z\"\n    }\n  ],\n  \"metadata\": {\n    \"count\": 1349,\n    \"pageSize\": 1770,\n    \"page\": 5070,\n    \"total\": 2340\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "ed4a959c-5a99-408b-8e50-55536b115167",
+      "name": "Market Data",
+      "description": {
+        "content": "Real-time and historical market data",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "5e08d566-85b2-4f84-8522-567451ef00e5",
+          "name": "Get Market Data Content Sets Price Groups",
+          "request": {
+            "name": "Get Market Data Content Sets Price Groups",
+            "description": {
+              "content": "Retrieves available price groups and market data content sets that the user has access to under their subscription.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "mdcs",
+                "priceGroup"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "310b84b6-39be-4dd9-b81b-c957e13345d0",
+              "name": "Available price groups",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "mdcs",
+                    "priceGroup"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"results\": [\n    {\n      \"priceGroup\": \"string\",\n      \"priceGroupName\": \"string\",\n      \"commodity\": \"string\"\n    },\n    {\n      \"priceGroup\": \"string\",\n      \"priceGroupName\": \"string\",\n      \"commodity\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "f1feb788-9bce-4461-8f46-7099bc6437df",
+      "name": "Reference Data",
+      "description": {
+        "content": "Commodity, location, and entity reference data",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "7519f457-dad1-4f75-9ebd-60766d9ebfa9",
+          "name": "Get Symbol Reference Data",
+          "request": {
+            "name": "Get Symbol Reference Data",
+            "description": {
+              "content": "Retrieves reference data for commodity symbols including descriptions, commodity type, unit of measure, and geographic location.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "reference",
+                "symbols"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "symbol",
+                  "value": "<string>",
+                  "description": "Filter by specific symbol codes"
+                },
+                {
+                  "disabled": false,
+                  "key": "commodity",
+                  "value": "<string>",
+                  "description": "Filter by commodity type (e.g., Crude Oil, Natural Gas)"
+                },
+                {
+                  "disabled": false,
+                  "key": "pageSize",
+                  "value": "1000"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1a4647c6-fe16-497b-a5d4-f325d36924dc",
+              "name": "Symbol reference data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "reference",
+                    "symbols"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "symbol",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "commodity",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "1000"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"results\": [\n    {\n      \"symbol\": \"string\",\n      \"description\": \"string\",\n      \"commodity\": \"string\",\n      \"deliveryRegion\": \"string\",\n      \"deliveryRegionBasis\": \"string\",\n      \"unit\": \"string\",\n      \"currency\": \"string\",\n      \"category\": \"string\"\n    },\n    {\n      \"symbol\": \"string\",\n      \"description\": \"string\",\n      \"commodity\": \"string\",\n      \"deliveryRegion\": \"string\",\n      \"deliveryRegionBasis\": \"string\",\n      \"unit\": \"string\",\n      \"currency\": \"string\",\n      \"category\": \"string\"\n    }\n  ],\n  \"count\": 737\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.platts.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "56dfa4bf-0a2a-4f13-a2c1-4c17c10f8533",
+    "name": "S&P Global Commodity Insights API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The S&P Global Commodity Insights API (formerly Platts API) provides RESTful access to commodity price assessments, market data, and analytics across energy, metals, agriculture, and petrochemicals markets. Bearer token authentication is required, with tokens generated via the Token Generation API using S&P Global SSO credentials.\n\nContact Support:\n Name: S&P Global Commodity Insights Support",
+      "type": "text/plain"
+    }
+  }
+}

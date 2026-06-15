@@ -1,0 +1,172 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "S&P Global Commodity Insights API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Authentication",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Generate Bearer Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.platts.com/auth/api",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Generates a Bearer access token using S&P Global Single Sign-On credentials. The returned token is required for all subsequent API requests."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Price Assessments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Latest Price Assessments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.platts.com/v1/prices/latest",
+            "params": [
+              {
+                "name": "symbol",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of Platts symbol codes (e.g., PCAAS00,AAQZB00)"
+              },
+              {
+                "name": "access",
+                "value": "",
+                "type": "query",
+                "description": "Access type filter"
+              }
+            ]
+          },
+          "docs": "Retrieves the most recent price assessments for specified commodity symbols. Returns current benchmark prices and assessments."
+        },
+        {
+          "info": {
+            "name": "Get Historical Price Assessments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.platts.com/v1/prices/history",
+            "params": [
+              {
+                "name": "symbol",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of Platts symbol codes"
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "Start date (YYYY-MM-DD)"
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "End date (YYYY-MM-DD)"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Number of records per page"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for pagination"
+              }
+            ]
+          },
+          "docs": "Retrieves historical price assessments for specified commodity symbols within a date range."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Reference Data",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Symbol Reference Data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.platts.com/v1/reference/symbols",
+            "params": [
+              {
+                "name": "symbol",
+                "value": "",
+                "type": "query",
+                "description": "Filter by specific symbol codes"
+              },
+              {
+                "name": "commodity",
+                "value": "",
+                "type": "query",
+                "description": "Filter by commodity type (e.g., Crude Oil, Natural Gas)"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Retrieves reference data for commodity symbols including descriptions, commodity type, unit of measure, and geographic location."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Market Data",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Market Data Content Sets Price Groups",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.platts.com/v1/mdcs/priceGroup"
+          },
+          "docs": "Retrieves available price groups and market data content sets that the user has access to under their subscription."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

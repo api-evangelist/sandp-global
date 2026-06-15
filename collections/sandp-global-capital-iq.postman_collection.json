@@ -1,0 +1,519 @@
+{
+  "item": [
+    {
+      "id": "dc76d4ca-dd24-4a18-85a8-cd8561362ea0",
+      "name": "Authentication",
+      "description": {
+        "content": "Token generation and refresh operations",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "2a5fd2aa-21f9-4d79-9abc-286e30f09d58",
+          "name": "Generate Authentication Token",
+          "request": {
+            "name": "Generate Authentication Token",
+            "description": {
+              "content": "Generates a Bearer access token using S&P Global Single Sign-On credentials. The token is valid for 3600 seconds (60 minutes).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "authenticate",
+                "api",
+                "v1",
+                "token"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"<string>\",\n  \"password\": \"<password>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b6f97ca7-c23e-487f-82de-4471d0ff3d9f",
+              "name": "Authentication token generated successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "authenticate",
+                    "api",
+                    "v1",
+                    "token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"username\": \"<string>\",\n  \"password\": \"<password>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"accessToken\": \"string\",\n  \"expiresIn\": 3803,\n  \"tokenType\": \"string\",\n  \"refreshToken\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "311d3d8b-4c73-43ad-9825-fc1a69278a99",
+              "name": "Invalid credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "authenticate",
+                    "api",
+                    "v1",
+                    "token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"username\": \"<string>\",\n  \"password\": \"<password>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cd4413b8-833c-4f3f-b93a-de516768fde6",
+          "name": "Refresh Authentication Token",
+          "request": {
+            "name": "Refresh Authentication Token",
+            "description": {
+              "content": "Refreshes an existing Bearer access token before it expires. Must be called before the 3600 second expiration window.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "authenticate",
+                "api",
+                "v1",
+                "tokenRefresh"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"refreshToken\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "98882353-8590-4757-ad2a-ef2de7c11e13",
+              "name": "Token refreshed successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "authenticate",
+                    "api",
+                    "v1",
+                    "tokenRefresh"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"refreshToken\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"accessToken\": \"string\",\n  \"expiresIn\": 3803,\n  \"tokenType\": \"string\",\n  \"refreshToken\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "c8b0d8e7-4043-48cd-8835-f3d183c2f4b0",
+      "name": "Financial Data",
+      "description": {
+        "content": "Retrieve fundamental financial data for companies",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f505517b-47d3-4eea-80be-ae2d1871ecb5",
+          "name": "Get Financial Data",
+          "request": {
+            "name": "Get Financial Data",
+            "description": {
+              "content": "Primary endpoint for retrieving financial and market intelligence data. Submit a JSON request body specifying the data set, entity identifiers, mnemonic fields, and time parameters to retrieve financial data.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v3",
+                "clientservice.json"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"inputRequests\": [\n    {\n      \"function\": \"<string>\",\n      \"identifier\": \"<string>\",\n      \"mnemonic\": \"<string>\",\n      \"properties\": {\n        \"startDate\": \"<string>\",\n        \"endDate\": \"<string>\",\n        \"periodType\": \"<string>\"\n      }\n    },\n    {\n      \"function\": \"<string>\",\n      \"identifier\": \"<string>\",\n      \"mnemonic\": \"<string>\",\n      \"properties\": {\n        \"startDate\": \"<string>\",\n        \"endDate\": \"<string>\",\n        \"periodType\": \"<string>\"\n      }\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e25c1b97-2548-4e4d-982b-be7b36371a11",
+              "name": "Financial data response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "clientservice.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"inputRequests\": [\n    {\n      \"function\": \"GDSP\",\n      \"identifier\": \"IQ303931\",\n      \"mnemonic\": \"IQ_TOTAL_REV\",\n      \"properties\": {\n        \"startDate\": \"<string>\",\n        \"endDate\": \"<string>\",\n        \"periodType\": \"<string>\"\n      }\n    },\n    {\n      \"function\": \"GDSP\",\n      \"identifier\": \"IQ303931\",\n      \"mnemonic\": \"IQ_TOTAL_REV\",\n      \"properties\": {\n        \"startDate\": \"<string>\",\n        \"endDate\": \"<string>\",\n        \"periodType\": \"<string>\"\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"GDSSDKResponse\": [\n    {\n      \"Rows\": [\n        {\n          \"Row\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        {\n          \"Row\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      ],\n      \"Headers\": [\n        {\n          \"Name\": \"string\"\n        },\n        {\n          \"Name\": \"string\"\n        }\n      ],\n      \"ErrMsg\": \"string\",\n      \"Type\": \"string\",\n      \"RequestId\": \"string\"\n    },\n    {\n      \"Rows\": [\n        {\n          \"Row\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        {\n          \"Row\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      ],\n      \"Headers\": [\n        {\n          \"Name\": \"string\"\n        },\n        {\n          \"Name\": \"string\"\n        }\n      ],\n      \"ErrMsg\": \"string\",\n      \"Type\": \"string\",\n      \"RequestId\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "68bd253b-72d7-419b-9cbe-01336a360a6c",
+              "name": "Invalid request parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "clientservice.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"inputRequests\": [\n    {\n      \"function\": \"GDSP\",\n      \"identifier\": \"IQ303931\",\n      \"mnemonic\": \"IQ_TOTAL_REV\",\n      \"properties\": {\n        \"startDate\": \"<string>\",\n        \"endDate\": \"<string>\",\n        \"periodType\": \"<string>\"\n      }\n    },\n    {\n      \"function\": \"GDSP\",\n      \"identifier\": \"IQ303931\",\n      \"mnemonic\": \"IQ_TOTAL_REV\",\n      \"properties\": {\n        \"startDate\": \"<string>\",\n        \"endDate\": \"<string>\",\n        \"periodType\": \"<string>\"\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "83b9b834-4258-4299-99fd-7a76f2fd0e2f",
+              "name": "Unauthorized - invalid or expired token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "clientservice.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"inputRequests\": [\n    {\n      \"function\": \"GDSP\",\n      \"identifier\": \"IQ303931\",\n      \"mnemonic\": \"IQ_TOTAL_REV\",\n      \"properties\": {\n        \"startDate\": \"<string>\",\n        \"endDate\": \"<string>\",\n        \"periodType\": \"<string>\"\n      }\n    },\n    {\n      \"function\": \"GDSP\",\n      \"identifier\": \"IQ303931\",\n      \"mnemonic\": \"IQ_TOTAL_REV\",\n      \"properties\": {\n        \"startDate\": \"<string>\",\n        \"endDate\": \"<string>\",\n        \"periodType\": \"<string>\"\n      }\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "54fb885a-31c2-4f4b-a7a9-07094dd58fdd",
+      "name": "Credit Ratings",
+      "description": {
+        "content": "Access S&P Global credit ratings and research",
+        "type": "text/plain"
+      },
+      "item": [],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api-ciq.marketintelligence.spglobal.com/gdsapi/rest",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "8a08c1a5-c365-47c0-8774-3b9c4d2e15fd",
+    "name": "S&P Capital IQ API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The S&P Capital IQ API provides programmatic access to comprehensive global financial data including fundamental financials, valuations, pricing, credit ratings, capital structure, and reference data. All requests use Bearer token authentication with tokens valid for 3600 seconds. Communication uses HTTPS on port 443 with 256-bit encryption.\n\nContact Support:\n Name: S&P Global Market Intelligence Support",
+      "type": "text/plain"
+    }
+  }
+}
