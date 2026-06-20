@@ -7,7 +7,7 @@ description: >-
   API provides price assessments, market data, and analytics for energy and commodities markets; and the Marketplace API
   enables programmatic access to the S&P Global data marketplace catalog.
 type: Index
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 tags:
   - Financial Data
   - Market Intelligence
