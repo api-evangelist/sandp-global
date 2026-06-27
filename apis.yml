@@ -66,7 +66,7 @@ apis:
     properties:
       - type: Documentation
         url: https://developer.spglobal.com/commodityinsights/api/getting-started
-      - type: Developer Portal
+      - type: DeveloperPortal
         url: https://developer.spglobal.com
       - type: Service Catalog
         url: https://developer.spglobal.com/commodityinsights/servicecatalog
@@ -99,7 +99,7 @@ common:
     url: https://github.com/spgi-ci
   - type: Website
     url: https://www.spglobal.com
-  - type: Developer Portal
+  - type: DeveloperPortal
     url: https://developer.spglobal.com
   - type: Marketplace
     url: https://www.marketplace.spglobal.com
@@ -123,7 +123,7 @@ common:
     url: capabilities/market-intelligence.yaml
   - type: JSONLD
     url: json-ld/sandp-global-context.jsonld
-  - type: LLMsTxt
+  - type: LlmsText
     url: https://developer.spglobal.com/llms.txt
 maintainers:
   - FN: Kin Lane
