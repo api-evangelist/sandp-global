@@ -1,0 +1,14 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/sandp-global-capital-iq-openapi.yml, openapi/sandp-global-commodity-insights-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: BearerAuth
+  type: http
+  scheme: bearer
+  description: Bearer token obtained from the /authenticate/api/v1/token endpoint
+  sources:
+  - openapi/sandp-global-capital-iq-openapi.yml
+  - openapi/sandp-global-commodity-insights-openapi.yml
