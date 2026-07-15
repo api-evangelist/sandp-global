@@ -95,6 +95,8 @@ apis:
         url: >-
           https://www.marketplace.spglobal.com/en/solutions/s-p-global-marketplace-catalog-api-(03f3c047-dcac-4fa7-a1ef-fb48a4d9b75d)
 common:
+  - type: AgenticAccess
+    url: agentic-access/sandp-global-agentic-access.yml
   - type: DomainSecurity
     url: security/sandp-global-domain-security.yml
   - type: Authentication
