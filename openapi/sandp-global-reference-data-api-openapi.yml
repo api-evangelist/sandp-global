@@ -1,0 +1,93 @@
+openapi: 3.0.3
+info:
+  title: S&P Capital IQ Authentication Reference Data API
+  description: The S&P Capital IQ API provides programmatic access to comprehensive global financial data including fundamental financials, valuations, pricing, credit ratings, capital structure, and reference data. All requests use Bearer token authentication with tokens valid for 3600 seconds. Communication uses HTTPS on port 443 with 256-bit encryption.
+  version: v3
+  contact:
+    name: S&P Global Market Intelligence Support
+    url: https://www.marketplace.spglobal.com
+  license:
+    name: Commercial
+    url: https://www.spglobal.com/marketintelligence/en/campaigns/terms-of-use
+servers:
+- url: https://api-ciq.marketintelligence.spglobal.com/gdsapi/rest
+  description: S&P Capital IQ REST API
+security:
+- BearerAuth: []
+tags:
+- name: Reference Data
+  description: Commodity, location, and entity reference data
+paths:
+  /v1/reference/symbols:
+    get:
+      operationId: getSymbolReferenceData
+      summary: Get Symbol Reference Data
+      description: Retrieves reference data for commodity symbols including descriptions, commodity type, unit of measure, and geographic location.
+      tags:
+      - Reference Data
+      parameters:
+      - name: symbol
+        in: query
+        schema:
+          type: string
+        description: Filter by specific symbol codes
+      - name: commodity
+        in: query
+        schema:
+          type: string
+        description: Filter by commodity type (e.g., Crude Oil, Natural Gas)
+      - name: pageSize
+        in: query
+        schema:
+          type: integer
+          default: 1000
+      responses:
+        '200':
+          description: Symbol reference data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SymbolReferenceResponse'
+components:
+  schemas:
+    SymbolReference:
+      type: object
+      properties:
+        symbol:
+          type: string
+          description: Platts symbol code
+        description:
+          type: string
+          description: Human-readable description
+        commodity:
+          type: string
+          description: Commodity type
+        deliveryRegion:
+          type: string
+          description: Geographic delivery region
+        deliveryRegionBasis:
+          type: string
+          description: Delivery region basis
+        unit:
+          type: string
+          description: Unit of measure
+        currency:
+          type: string
+          description: Currency code
+        category:
+          type: string
+          description: Assessment category
+    SymbolReferenceResponse:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/SymbolReference'
+        count:
+          type: integer
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: Bearer token obtained from the /authenticate/api/v1/token endpoint

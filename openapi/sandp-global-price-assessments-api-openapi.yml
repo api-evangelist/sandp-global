@@ -1,0 +1,152 @@
+openapi: 3.0.3
+info:
+  title: S&P Capital IQ Authentication Price Assessments API
+  description: The S&P Capital IQ API provides programmatic access to comprehensive global financial data including fundamental financials, valuations, pricing, credit ratings, capital structure, and reference data. All requests use Bearer token authentication with tokens valid for 3600 seconds. Communication uses HTTPS on port 443 with 256-bit encryption.
+  version: v3
+  contact:
+    name: S&P Global Market Intelligence Support
+    url: https://www.marketplace.spglobal.com
+  license:
+    name: Commercial
+    url: https://www.spglobal.com/marketintelligence/en/campaigns/terms-of-use
+servers:
+- url: https://api-ciq.marketintelligence.spglobal.com/gdsapi/rest
+  description: S&P Capital IQ REST API
+security:
+- BearerAuth: []
+tags:
+- name: Price Assessments
+  description: Commodity price assessment data
+paths:
+  /v1/prices/latest:
+    get:
+      operationId: getLatestPrices
+      summary: Get Latest Price Assessments
+      description: Retrieves the most recent price assessments for specified commodity symbols. Returns current benchmark prices and assessments.
+      tags:
+      - Price Assessments
+      parameters:
+      - name: symbol
+        in: query
+        required: true
+        schema:
+          type: string
+        description: Comma-separated list of Platts symbol codes (e.g., PCAAS00,AAQZB00)
+      - name: access
+        in: query
+        schema:
+          type: string
+        description: Access type filter
+      responses:
+        '200':
+          description: Latest price assessments
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PriceAssessmentsResponse'
+  /v1/prices/history:
+    get:
+      operationId: getPriceHistory
+      summary: Get Historical Price Assessments
+      description: Retrieves historical price assessments for specified commodity symbols within a date range.
+      tags:
+      - Price Assessments
+      parameters:
+      - name: symbol
+        in: query
+        required: true
+        schema:
+          type: string
+        description: Comma-separated list of Platts symbol codes
+      - name: startDate
+        in: query
+        required: true
+        schema:
+          type: string
+          format: date
+        description: Start date (YYYY-MM-DD)
+      - name: endDate
+        in: query
+        required: true
+        schema:
+          type: string
+          format: date
+        description: End date (YYYY-MM-DD)
+      - name: pageSize
+        in: query
+        schema:
+          type: integer
+          default: 1000
+        description: Number of records per page
+      - name: page
+        in: query
+        schema:
+          type: integer
+          default: 1
+        description: Page number for pagination
+      responses:
+        '200':
+          description: Historical price data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PriceHistoryResponse'
+components:
+  schemas:
+    PriceAssessment:
+      type: object
+      properties:
+        symbol:
+          type: string
+          description: Platts symbol code
+        assessDate:
+          type: string
+          format: date
+          description: Assessment date
+        value:
+          type: number
+          format: double
+          description: Price assessment value
+        unit:
+          type: string
+          description: Unit of measure
+        currency:
+          type: string
+          description: Currency code (e.g., USD)
+        modDate:
+          type: string
+          format: date-time
+          description: Last modification timestamp
+    PriceHistoryResponse:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/PriceAssessment'
+        metadata:
+          type: object
+          properties:
+            count:
+              type: integer
+            pageSize:
+              type: integer
+            page:
+              type: integer
+            total:
+              type: integer
+    PriceAssessmentsResponse:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/PriceAssessment'
+        count:
+          type: integer
+          description: Number of results returned
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: Bearer token obtained from the /authenticate/api/v1/token endpoint

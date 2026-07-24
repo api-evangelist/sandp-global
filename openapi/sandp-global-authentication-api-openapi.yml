@@ -1,0 +1,143 @@
+openapi: 3.0.3
+info:
+  title: S&P Capital IQ Authentication API
+  description: The S&P Capital IQ API provides programmatic access to comprehensive global financial data including fundamental financials, valuations, pricing, credit ratings, capital structure, and reference data. All requests use Bearer token authentication with tokens valid for 3600 seconds. Communication uses HTTPS on port 443 with 256-bit encryption.
+  version: v3
+  contact:
+    name: S&P Global Market Intelligence Support
+    url: https://www.marketplace.spglobal.com
+  license:
+    name: Commercial
+    url: https://www.spglobal.com/marketintelligence/en/campaigns/terms-of-use
+servers:
+- url: https://api-ciq.marketintelligence.spglobal.com/gdsapi/rest
+  description: S&P Capital IQ REST API
+security:
+- BearerAuth: []
+tags:
+- name: Authentication
+  description: Token generation and refresh operations
+paths:
+  /authenticate/api/v1/token:
+    post:
+      operationId: generateAuthToken
+      summary: Generate Authentication Token
+      description: Generates a Bearer access token using S&P Global Single Sign-On credentials. The token is valid for 3600 seconds (60 minutes).
+      tags:
+      - Authentication
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - username
+              - password
+              properties:
+                username:
+                  type: string
+                  description: S&P Global SSO email address
+                password:
+                  type: string
+                  format: password
+                  description: S&P Global SSO password
+      responses:
+        '200':
+          description: Authentication token generated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenResponse'
+        '401':
+          description: Invalid credentials
+  /authenticate/api/v1/tokenRefresh:
+    post:
+      operationId: refreshAuthToken
+      summary: Refresh Authentication Token
+      description: Refreshes an existing Bearer access token before it expires. Must be called before the 3600 second expiration window.
+      tags:
+      - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                refreshToken:
+                  type: string
+                  description: Refresh token received during initial authentication
+      responses:
+        '200':
+          description: Token refreshed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenResponse'
+  /auth/api:
+    post:
+      operationId: generateCommodityToken
+      summary: Generate Bearer Token
+      description: Generates a Bearer access token using S&P Global Single Sign-On credentials. The returned token is required for all subsequent API requests.
+      tags:
+      - Authentication
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - email
+              - password
+              properties:
+                email:
+                  type: string
+                  description: S&P Global SSO email address
+                password:
+                  type: string
+                  format: password
+                  description: S&P Global SSO password
+      responses:
+        '200':
+          description: Bearer token generated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenResponse_2'
+        '401':
+          description: Invalid credentials
+components:
+  schemas:
+    TokenResponse:
+      type: object
+      properties:
+        accessToken:
+          type: string
+          description: Bearer access token for subsequent API requests
+        expiresIn:
+          type: integer
+          description: Token validity period in seconds (3600)
+        tokenType:
+          type: string
+          description: Token type (Bearer)
+        refreshToken:
+          type: string
+          description: Token for refreshing the access token
+    TokenResponse_2:
+      type: object
+      properties:
+        token:
+          type: string
+          description: Bearer access token
+        tokenType:
+          type: string
+          description: Token type (bearer)
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: Bearer token obtained from the /authenticate/api/v1/token endpoint

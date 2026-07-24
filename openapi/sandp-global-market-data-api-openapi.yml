@@ -1,0 +1,55 @@
+openapi: 3.0.3
+info:
+  title: S&P Capital IQ Authentication Market Data API
+  description: The S&P Capital IQ API provides programmatic access to comprehensive global financial data including fundamental financials, valuations, pricing, credit ratings, capital structure, and reference data. All requests use Bearer token authentication with tokens valid for 3600 seconds. Communication uses HTTPS on port 443 with 256-bit encryption.
+  version: v3
+  contact:
+    name: S&P Global Market Intelligence Support
+    url: https://www.marketplace.spglobal.com
+  license:
+    name: Commercial
+    url: https://www.spglobal.com/marketintelligence/en/campaigns/terms-of-use
+servers:
+- url: https://api-ciq.marketintelligence.spglobal.com/gdsapi/rest
+  description: S&P Capital IQ REST API
+security:
+- BearerAuth: []
+tags:
+- name: Market Data
+  description: Real-time and historical market data
+paths:
+  /v1/mdcs/priceGroup:
+    get:
+      operationId: getPriceGroups
+      summary: Get Market Data Content Sets Price Groups
+      description: Retrieves available price groups and market data content sets that the user has access to under their subscription.
+      tags:
+      - Market Data
+      responses:
+        '200':
+          description: Available price groups
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PriceGroupsResponse'
+components:
+  schemas:
+    PriceGroupsResponse:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            type: object
+            properties:
+              priceGroup:
+                type: string
+              priceGroupName:
+                type: string
+              commodity:
+                type: string
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: Bearer token obtained from the /authenticate/api/v1/token endpoint
