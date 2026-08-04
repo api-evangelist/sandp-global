@@ -1,0 +1,22 @@
+{
+  "provider": "sandp-global",
+  "sources": [
+    "sandp-global-authentication-api-openapi.yml",
+    "sandp-global-financial-data-api-openapi.yml",
+    "sandp-global-market-data-api-openapi.yml",
+    "sandp-global-price-assessments-api-openapi.yml",
+    "sandp-global-reference-data-api-openapi.yml"
+  ],
+  "outputs": [
+    "sandp-global-authentication-api-openapi.yml",
+    "sandp-global-financial-data-api-openapi.yml",
+    "sandp-global-market-data-api-openapi.yml",
+    "sandp-global-price-assessments-api-openapi.yml",
+    "sandp-global-reference-data-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

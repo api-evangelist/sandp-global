@@ -1,0 +1,327 @@
+openapi: 3.0.3
+info:
+  title: S&P Global Commodity Insights API
+  description: >-
+    The S&P Global Commodity Insights API (formerly Platts API) provides
+    RESTful access to commodity price assessments, market data, and analytics
+    across energy, metals, agriculture, and petrochemicals markets. Bearer
+    token authentication is required, with tokens generated via the Token
+    Generation API using S&P Global SSO credentials.
+  version: v1
+  contact:
+    name: S&P Global Commodity Insights Support
+    url: https://commodityinsightssupport.spglobal.com
+  license:
+    name: Commercial
+    url: https://www.spglobal.com/commodityinsights/en/about/terms-of-use
+servers:
+  - url: https://api.platts.com
+    description: S&P Global Commodity Insights (Platts) API
+
+security:
+  - BearerAuth: []
+
+tags:
+  - name: Authentication
+    description: Token generation for API access
+  - name: Price Assessments
+    description: Commodity price assessment data
+  - name: Market Data
+    description: Real-time and historical market data
+  - name: Reference Data
+    description: Commodity, location, and entity reference data
+
+paths:
+  /auth/api:
+    post:
+      operationId: generateCommodityToken
+      summary: Generate Bearer Token
+      description: >-
+        Generates a Bearer access token using S&P Global Single Sign-On
+        credentials. The returned token is required for all subsequent
+        API requests.
+      tags:
+        - Authentication
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  description: S&P Global SSO email address
+                password:
+                  type: string
+                  format: password
+                  description: S&P Global SSO password
+      responses:
+        '200':
+          description: Bearer token generated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenResponse'
+        '401':
+          description: Invalid credentials
+
+  /v1/prices/latest:
+    get:
+      operationId: getLatestPrices
+      summary: Get Latest Price Assessments
+      description: >-
+        Retrieves the most recent price assessments for specified commodity
+        symbols. Returns current benchmark prices and assessments.
+      tags:
+        - Price Assessments
+      parameters:
+        - name: symbol
+          in: query
+          required: true
+          schema:
+            type: string
+          description: >-
+            Comma-separated list of Platts symbol codes (e.g., PCAAS00,AAQZB00)
+        - name: access
+          in: query
+          schema:
+            type: string
+          description: Access type filter
+      responses:
+        '200':
+          description: Latest price assessments
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PriceAssessmentsResponse'
+
+  /v1/prices/history:
+    get:
+      operationId: getPriceHistory
+      summary: Get Historical Price Assessments
+      description: >-
+        Retrieves historical price assessments for specified commodity symbols
+        within a date range.
+      tags:
+        - Price Assessments
+      parameters:
+        - name: symbol
+          in: query
+          required: true
+          schema:
+            type: string
+          description: Comma-separated list of Platts symbol codes
+        - name: startDate
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+          description: Start date (YYYY-MM-DD)
+        - name: endDate
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+          description: End date (YYYY-MM-DD)
+        - name: pageSize
+          in: query
+          schema:
+            type: integer
+            default: 1000
+          description: Number of records per page
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+          description: Page number for pagination
+      responses:
+        '200':
+          description: Historical price data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PriceHistoryResponse'
+
+  /v1/reference/symbols:
+    get:
+      operationId: getSymbolReferenceData
+      summary: Get Symbol Reference Data
+      description: >-
+        Retrieves reference data for commodity symbols including descriptions,
+        commodity type, unit of measure, and geographic location.
+      tags:
+        - Reference Data
+      parameters:
+        - name: symbol
+          in: query
+          schema:
+            type: string
+          description: Filter by specific symbol codes
+        - name: commodity
+          in: query
+          schema:
+            type: string
+          description: Filter by commodity type (e.g., Crude Oil, Natural Gas)
+        - name: pageSize
+          in: query
+          schema:
+            type: integer
+            default: 1000
+      responses:
+        '200':
+          description: Symbol reference data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SymbolReferenceResponse'
+
+  /v1/mdcs/priceGroup:
+    get:
+      operationId: getPriceGroups
+      summary: Get Market Data Content Sets Price Groups
+      description: >-
+        Retrieves available price groups and market data content sets
+        that the user has access to under their subscription.
+      tags:
+        - Market Data
+      responses:
+        '200':
+          description: Available price groups
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PriceGroupsResponse'
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: Bearer token obtained from the /auth/api token generation endpoint
+
+  schemas:
+    TokenResponse:
+      type: object
+      properties:
+        token:
+          type: string
+          description: Bearer access token
+        tokenType:
+          type: string
+          description: Token type (bearer)
+
+    PriceAssessment:
+      type: object
+      properties:
+        symbol:
+          type: string
+          description: Platts symbol code
+        assessDate:
+          type: string
+          format: date
+          description: Assessment date
+        value:
+          type: number
+          format: double
+          description: Price assessment value
+        unit:
+          type: string
+          description: Unit of measure
+        currency:
+          type: string
+          description: Currency code (e.g., USD)
+        modDate:
+          type: string
+          format: date-time
+          description: Last modification timestamp
+
+    PriceAssessmentsResponse:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/PriceAssessment'
+        count:
+          type: integer
+          description: Number of results returned
+
+    PriceHistoryResponse:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/PriceAssessment'
+        metadata:
+          type: object
+          properties:
+            count:
+              type: integer
+            pageSize:
+              type: integer
+            page:
+              type: integer
+            total:
+              type: integer
+
+    SymbolReference:
+      type: object
+      properties:
+        symbol:
+          type: string
+          description: Platts symbol code
+        description:
+          type: string
+          description: Human-readable description
+        commodity:
+          type: string
+          description: Commodity type
+        deliveryRegion:
+          type: string
+          description: Geographic delivery region
+        deliveryRegionBasis:
+          type: string
+          description: Delivery region basis
+        unit:
+          type: string
+          description: Unit of measure
+        currency:
+          type: string
+          description: Currency code
+        category:
+          type: string
+          description: Assessment category
+
+    SymbolReferenceResponse:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/SymbolReference'
+        count:
+          type: integer
+
+    PriceGroupsResponse:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            type: object
+            properties:
+              priceGroup:
+                type: string
+              priceGroupName:
+                type: string
+              commodity:
+                type: string
